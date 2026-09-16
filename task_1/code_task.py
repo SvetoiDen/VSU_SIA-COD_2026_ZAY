@@ -1,7 +1,14 @@
 # Первый способ
 
 def swift_temp(arr, d):
-    pass
+    N = len(arr)
+    if d > N:
+        d %= N
+    temp = arr[:d]
+
+    del arr[:d]
+    arr += temp
+    return arr
 
 
 # ============================ #
