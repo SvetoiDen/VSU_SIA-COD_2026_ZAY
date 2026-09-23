@@ -1,6 +1,9 @@
 from code_task import *
 import time
 
+sizes = [4096, 16384, 65536, 262144, 500000, 1000000, 5_000_000, 10_000_000]
+sep_print = "# ==================================== #"
+
 
 def test_swift(func, arr, d):
     # если первые d данные в конце массива - True
@@ -9,10 +12,6 @@ def test_swift(func, arr, d):
 
     res = func(arr, d)
     return res[(N - d):] == test_true
-
-
-sizes = [4096, 16384, 65536, 262144, 500000, 1000000, 5_000_000, 10_000_000]
-sep_print = "# ==================================== #"
 
 
 def main_test_func(n, d):
@@ -26,52 +25,53 @@ def main_test_func(n, d):
     print(sep_print)
 
 
+def ns_test(func, d):
+    tempList = {}
+    for n in sizes:
+        a = list(range(n))
+        listmid = []
+        for _ in range(10):
+            t1 = time.perf_counter_ns()
+            res = func(a, d)
+            t2 = time.perf_counter_ns()
+            listmid.append(t1 - t2)
+        timemid = sorted(listmid)[5]
+        tempList[f"{n}"] = f"{timemid}"
+        print(f"n = {n:>12} | время = {timemid / 1_000_000:8.4f} ms | результат[:{d}+2] = {res[:(d + 2)]}")
+    return tempList
+
+
 def main_test(sizes):
     jsonData = {}
 
     print(sep_print)
     print("# Тестирование и время сдвига масссива на d позиции #")
     print(sep_print)
+
     d = 3  # первый способ
+
     print(f"# Первый способ при {sizes} элементах массива d={d} #")
 
-    tempList = {}
-    for n in sizes:
-        a = list(range(n))
-        t1 = time.perf_counter_ns()
-        res = swift_temp(a, d)
-        t2 = time.perf_counter_ns()
-        tempList[f"{n}"] = f"{(t2 - t1)}"
-        print(f"n = {n:>12} | время = {(t2 - t1) / 1_000_000:8.4f} ms | результат[:{d}+2] = {res[:(d + 2)]}")
-    jsonData['first_swift'] = tempList
+    t1 = ns_test(swift_temp, d)
+    jsonData['first_swift'] = t1
 
     print(sep_print)
+
     d = 4  # второй способ
+
     print(f"# Второй способ при {sizes} элементах массива при d={d} #")
 
-    tempList = {}
-    for n in sizes:
-        a = list(range(n))
-        t1 = time.perf_counter_ns()
-        res = swift_loop(a, d)
-        t2 = time.perf_counter_ns()
-        tempList[f"{n}"] = f"{(t2 - t1)}"
-        print(f"n = {n:>12} | время = {(t2 - t1) / 1_000_000:8.4f} ms | результат[:{d}+2] = {res[:(d + 2)]}")
-    jsonData['two_swift'] = tempList
+    t2 = ns_test(swift_loop, d)
+    jsonData['two_swift'] = t2
 
     print(sep_print)
+
     d = 12  # третий способ
+
     print(f"# Третий способ при {sizes} элементах массива при d={d} #")
 
-    tempList = {}
-    for n in sizes:
-        a = list(range(n))
-        t1 = time.perf_counter_ns()
-        res = swift_swift(a, d)
-        t2 = time.perf_counter_ns()
-        tempList[f"{n}"] = f"{(t2 - t1)}"
-        print(f"n = {n:>12} | время = {(t2 - t1) / 1_000_000:8.4f} ms | результат[:{d}+2] = {res[:(d + 2)]}")
-    jsonData['three_swift'] = tempList
+    t3 = ns_test(swift_swift, d)
+    jsonData['three_swift'] = t3
 
     print(sep_print)
     return jsonData
