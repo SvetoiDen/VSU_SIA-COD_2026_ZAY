@@ -1,7 +1,7 @@
 from code_task import *
 import time
 
-sizes = [8, 32, 128, 512, 1024, 4096, 16384, 65536, 262144]
+sizes = [4, 32, 128, 512, 1024, 4096, 16384, 65536, 262144]
 
 
 def main_test(sizes):
@@ -11,9 +11,8 @@ def main_test(sizes):
     print(sep_print)
     print("# Тестирование и время сдвига масссива на d позиции #")
     print(sep_print)
-    print(f"# Первый способ при {sizes} элементах массива d=3 #")
-
-    d = 3
+    d = 3 # первый способ
+    print(f"# Первый способ при {sizes} элементах массива d={d} #")
 
     tempList = {}
     for n in sizes:
@@ -26,9 +25,9 @@ def main_test(sizes):
     jsonData['first_swift'] = tempList
 
     print(sep_print)
-    print(f"# Второй способ при {sizes} элементах массива при d=12 #")
+    d = 4 # второй способ
+    print(f"# Второй способ при {sizes} элементах массива при d={d} #")
 
-    d = 12
     tempList = {}
     for n in sizes:
         a = list(range(n))
@@ -40,9 +39,9 @@ def main_test(sizes):
     jsonData['two_swift'] = tempList
 
     print(sep_print)
-    print(f"# Третий способ при {sizes} элементах массива при d=4 #")
+    d = 12 # третий способ
+    print(f"# Третий способ при {sizes} элементах массива при d={d} #")
 
-    d = 4
     tempList = {}
     for n in sizes:
         a = list(range(n))
