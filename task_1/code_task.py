@@ -1,4 +1,5 @@
 # Первый способ
+# Худший случай - 0(n)
 
 def swift_temp(arr, d):
     N = len(arr)
@@ -13,6 +14,7 @@ def swift_temp(arr, d):
 
 # ============================ #
 # Второй способ
+# Худший случай - 0(d(N-1))
 
 def swift_loop(arr, d):
     N = len(arr)
