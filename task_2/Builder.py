@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BuilderPlayer(ABC):
+class Builder(ABC):
 
     @property
     @abstractmethod
@@ -26,4 +26,12 @@ class BuilderPlayer(ABC):
 
     @abstractmethod
     def viewPlayer(self) -> None:
+        pass
+
+    @abstractmethod
+    def updateSkils(self) -> None:
+        pass
+
+    @abstractmethod
+    def updateState(self) -> None:
         pass
