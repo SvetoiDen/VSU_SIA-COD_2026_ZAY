@@ -31,4 +31,5 @@ class Player:
         return self._pointStats < 0
 
     def build(self) -> dict:
+        if self.isCheckPoint(): return {"error": 404}
         return self._jsonPlayer

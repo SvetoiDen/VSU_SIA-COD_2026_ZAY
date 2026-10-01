@@ -4,11 +4,12 @@ from enum import Enum
 class ClassPlayer(Enum):
     # ====================================== #
 
-    WARLOR = ("Воин", {})
-    MAGIC = ("Маг", {})
-    BOW = ("Лучник", {})
-    FIREMAG = ("Огненный маг", {})
-    LIGHTMAG = ("Маг молний", {})
+    NONCLASS = ("Безработный", {"strength": 0, "agility": 0, "intelligent": 0, "speed": 0})
+    WARLOR = ("Воин", {"strength": +5, "agility": +1, "intelligent": -1, "speed": +2})
+    MAGIC = ("Маг", {"strength": -1, "agility": +1, "intelligent": +5, "speed": +1})
+    BOW = ("Лучник", {"strength": -1, "agility": +5, "intelligent": 1, "speed": +3})
+    FIREMAG = ("Огненный маг", {"strength": -1, "agility": +1, "intelligent": +5, "speed": +1})
+    LIGHTMAG = ("Маг молний", {"strength": -1, "agility": -1, "intelligent": +5, "speed": +1})
 
     # ======================================= #
 
