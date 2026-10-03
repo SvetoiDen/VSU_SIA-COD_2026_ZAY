@@ -8,7 +8,7 @@ class Player:
             "species": None,
             "class": None,
             "health": 20,
-            "manapool": 20,
+            "mana": 20,
             "stats": {
                 "strength": 1,
                 "agility": 1,
@@ -29,6 +29,9 @@ class Player:
 
     def isCheckPoint(self) -> bool:
         return self._pointStats < 0
+
+    def getHealthManaPlayer(self) -> tuple[int, int]:
+        return (self._jsonPlayer['health'], self._jsonPlayer['mana'])
 
     def build(self) -> dict:
         if self.isCheckPoint(): return {"error": 404}

@@ -12,23 +12,23 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def speciesPlayer(self) -> None:
+    def speciesPlayer(self, speciesPlayer: SpeciesPlayer = None):
         pass
 
     @abstractmethod
-    def classPlayer(self) -> None:
+    def classPlayer(self, classPlayer: ClassPlayer):
         pass
 
     @abstractmethod
-    def statsPlayer(self) -> None:
+    def statsPlayer(self):
         pass
 
     @abstractmethod
-    def skilsPlayer(self) -> None:
+    def skilsPlayer(self):
         pass
 
     @abstractmethod
-    def viewPlayer(self) -> None:
+    def viewPlayer(self):
         pass
 
     @abstractmethod
@@ -40,17 +40,13 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def setClassPlayer(self, classplayer: ClassPlayer) -> None:
-        pass
-
-    @abstractmethod
-    def setSpeciesPlayer(self, speciesplayer: SpeciesPlayer) -> None:
-        pass
-
-    @abstractmethod
     def healthPlayer(self, health: int):
         pass
 
     @abstractmethod
     def manaPlayer(self, mana: int):
+        pass
+
+    @abstractmethod
+    def balanceHealthMana(self):
         pass

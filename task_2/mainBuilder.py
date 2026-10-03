@@ -7,12 +7,7 @@ if __name__ == "__main__":
     builder = BuilderPlayer()
     director = DirectorPlayer()
 
-    # director.builder = builder
-    # director.build_player_human_magic()
-    #
-    # print(builder.player.build())
-
-    builder
-    print(builder.player.build())
+    director.builder = builder
+    director.build_player_human_magic()
 
     print(builder.player.build())

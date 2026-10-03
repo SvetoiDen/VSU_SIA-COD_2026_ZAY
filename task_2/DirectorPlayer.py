@@ -16,9 +16,8 @@ class DirectorPlayer:
         self._builder = builder
 
     def build_player_human_magic(self):
-        self.builder.setSpeciesPlayer(SpeciesPlayer.HUMAN)
-        self.builder.setClassPlayer(ClassPlayer.MAGIC)
-        self.builder.manaPlayer(40)
-        self.builder.healthPlayer(10)
+        self.builder.speciesPlayer(SpeciesPlayer.HUMAN)
+        self.builder.classPlayer(ClassPlayer.MAGIC)
+        self.builder.manaPlayer(40).healthPlayer(30)
         self.builder.statsPlayer()
 

@@ -65,17 +65,26 @@ class BuilderPlayer(Builder):
         else:
             self._player.setAttribute("health", value1['health'] + value2['health'] + health)
 
+        return self
+
     def manaPlayer(self, mana: int = None):
         if self.isCurrentClassSpecies(): return
         value1 = self._classPlayer.getTable()
         value2 = self._speciesPlayer.getTable()
 
         if mana is None:
-            self._player.setAttribute("manapool", value1['manapool'] + value2['manapool'])
+            self._player.setAttribute("mana", value1['mana'] + value2['mana'])
         else:
-            self._player.setAttribute("manapool", value1['manapool'] + value2['manapool'] + mana)
+            self._player.setAttribute("mana", value1['mana'] + value2['mana'] + mana)
 
         return self
 
     def isCurrentClassSpecies(self) -> bool:
         return self._classPlayer is None and self._speciesPlayer is None
+
+    def balanceHealthMana(self):
+        health, mana = self._player.getHealthManaPlayer()
+        self.healthPlayer(1 if health < 0 else health)
+        self.manaPlayer(1 if mana < 0 else mana)
+
+        return self
