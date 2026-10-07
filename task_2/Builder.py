@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from Player import Player
 from ClassPlayer import ClassPlayer
+from ItemsPlayer import ItemsPlayer
 from SpeciesPlayer import SpeciesPlayer
-
+from ViewPlayer import ViewPlayer
 
 class Builder(ABC):
 
@@ -28,7 +29,7 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def viewPlayer(self):
+    def viewPlayer(self, view: ViewPlayer):
         pass
 
     @abstractmethod
@@ -49,4 +50,16 @@ class Builder(ABC):
 
     @abstractmethod
     def balanceHealthMana(self):
+        pass
+
+    @abstractmethod
+    def itemAddPlayer(self, item: str):
+        pass
+
+    @abstractmethod
+    def itemAddStartPlayer(self, itemStart: ItemsPlayer):
+        pass
+
+    @abstractmethod
+    def itemRemovePlayer(self):
         pass

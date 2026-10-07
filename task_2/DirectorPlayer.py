@@ -1,6 +1,8 @@
 from Builder import Builder
 from ClassPlayer import ClassPlayer
 from SpeciesPlayer import SpeciesPlayer
+from ItemsPlayer import ItemsPlayer
+from ViewPlayer import ViewPlayer
 
 
 class DirectorPlayer:
@@ -19,5 +21,6 @@ class DirectorPlayer:
         self.builder.speciesPlayer(SpeciesPlayer.HUMAN)
         self.builder.classPlayer(ClassPlayer.MAGIC)
         self.builder.manaPlayer(40).healthPlayer(30)
-        self.builder.statsPlayer()
-
+        self.builder.itemAddStartPlayer(ItemsPlayer.ADVENTURE)
+        self.builder.itemAddPlayer("мешок говна")
+        self.builder.viewPlayer(ViewPlayer.HUMAN)

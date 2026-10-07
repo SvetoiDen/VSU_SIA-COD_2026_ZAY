@@ -2,6 +2,8 @@ from Builder import Builder
 from Player import Player
 from ClassPlayer import ClassPlayer
 from SpeciesPlayer import SpeciesPlayer
+from ViewPlayer import ViewPlayer
+from ItemsPlayer import ItemsPlayer
 
 
 class BuilderPlayer(Builder):
@@ -9,6 +11,7 @@ class BuilderPlayer(Builder):
                  speciesplayer: SpeciesPlayer = SpeciesPlayer.HUMAN):
         self._classPlayer = classplayer
         self._speciesPlayer = speciesplayer
+        self._items = []
         self.reset()
 
     def reset(self):
@@ -16,6 +19,7 @@ class BuilderPlayer(Builder):
 
     @property
     def player(self) -> Player:
+        self._player.setAttribute('items', self._items)
         player = self._player
         self.reset()
         return player
@@ -32,22 +36,25 @@ class BuilderPlayer(Builder):
         self._player.setAttribute('class', self._classPlayer.getName())
         return self
 
-    def statsPlayer(self):
-        if self.isCurrentClassSpecies(): return
+    def statsPlayer(self) -> None:
+        if self.isCurrentClassSpecies():
+            return
         value1 = self._classPlayer.getTable()
         value2 = self._speciesPlayer.getTable()
 
-        self._player.setStateAttribute("strength", value1['strength'] + value2['strength'])
-        self._player.setStateAttribute("agility", value1['agility'] + value2['agility'])
-        self._player.setStateAttribute("intelligent", value1['intelligent'] + value2['intelligent'])
-        self._player.setStateAttribute("speed", value1['speed'] + value2['speed'])
-        return self
+        self._player.setStateAttribute(
+            "strength", value1['strength'] + value2['strength']
+        ).setStateAttribute(
+            "agility", value1['agility'] + value2['agility']
+        ).setStateAttribute(
+            "intelligent", value1['intelligent'] + value2['intelligent']
+        ).setStateAttribute("speed", value1['speed'] + value2['speed'])
 
     def skilsPlayer(self):
         pass
 
-    def viewPlayer(self):
-        pass
+    def viewPlayer(self, view: ViewPlayer) -> None:
+        self._player.setAttribute('view', view.buildView())
 
     def updateSkils(self):
         pass
@@ -56,7 +63,8 @@ class BuilderPlayer(Builder):
         pass
 
     def healthPlayer(self, health: int = None):
-        if self.isCurrentClassSpecies(): return
+        if self.isCurrentClassSpecies():
+            return
         value1 = self._classPlayer.getTable()
         value2 = self._speciesPlayer.getTable()
 
@@ -68,7 +76,8 @@ class BuilderPlayer(Builder):
         return self
 
     def manaPlayer(self, mana: int = None):
-        if self.isCurrentClassSpecies(): return
+        if self.isCurrentClassSpecies():
+            return
         value1 = self._classPlayer.getTable()
         value2 = self._speciesPlayer.getTable()
 
@@ -87,4 +96,16 @@ class BuilderPlayer(Builder):
         self.healthPlayer(1 if health < 0 else health)
         self.manaPlayer(1 if mana < 0 else mana)
 
+        return self
+
+    def itemAddPlayer(self, item: str):
+        self._items.append(item)
+        return self
+
+    def itemAddStartPlayer(self, itemStart: ItemsPlayer):
+        for item in itemStart.getItems():
+            self._items.append(item)
+
+    def itemRemovePlayer(self):
+        self._items.remove(self._items[-1])
         return self

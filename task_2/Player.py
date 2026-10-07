@@ -20,18 +20,20 @@ class Player:
             "view": None
         }
 
-    def setAttribute(self, key: str, value: Any) -> None:
+    def setAttribute(self, key: str, value: Any):
         self._jsonPlayer[key] = value
+        return self
 
-    def setStateAttribute(self, state: str, value: int) -> None:
+    def setStateAttribute(self, state: str, value: int):
         self._pointStats -= value
         self._jsonPlayer['stats'][state] += value
+        return self
 
     def isCheckPoint(self) -> bool:
         return self._pointStats < 0
 
     def getHealthManaPlayer(self) -> tuple[int, int]:
-        return (self._jsonPlayer['health'], self._jsonPlayer['mana'])
+        return self._jsonPlayer['health'], self._jsonPlayer['mana']
 
     def build(self) -> dict:
         if self.isCheckPoint(): return {"error": 404}
