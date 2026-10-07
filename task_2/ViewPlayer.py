@@ -70,6 +70,12 @@ class AppearancePlayer(Enum):
         'gait': ['быстрая', 'тяжёлая', 'плавная', 'косолапая']
     }
 
+    def __init__(self, dataJs):
+        self._data = dataJs
+
+    def getValue(self, key):
+        return self._data[key]
+
 
 class ViewPlayer(Enum):
     HUMAN = [
@@ -222,9 +228,13 @@ class ViewPlayer(Enum):
         self._N = len(l)
 
     def buildView(self) -> dict:
-        resdata = {'face': self._items[0][0][self._items[1]], 'body': self._items[1][0][self._items[1]],
-                   'muscles': self._items[2][0][self._items[1]], 'eyes': self._items[3][0][self._items[1]],
-                   'skin': self._items[4][0][self._items[1]], 'teeth': self._items[5][0][self._items[1]],
-                   'voice': self._items[6][0][self._items[1]], 'hands': self._items[7][0][self._items[1]]
+        resdata = {'face': self._items[0][0].getValue(self._items[0][1]),
+                   'body': self._items[1][0].getValue(self._items[1][1]),
+                   'muscles': self._items[2][0].getValue(self._items[2][1]),
+                   'eyes': self._items[3][0].getValue(self._items[3][1]),
+                   'skin': self._items[4][0].getValue(self._items[4][1]),
+                   'teeth': self._items[5][0].getValue(self._items[5][1]),
+                   'voice': self._items[6][0].getValue(self._items[6][1]),
+                   'hands': self._items[7][0].getValue(self._items[7][1])
                    }
         return resdata

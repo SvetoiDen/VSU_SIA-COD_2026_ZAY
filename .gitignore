@@ -5,3 +5,4 @@ task_1
 *.xlsx
 *.csv
 PATTERN.md
+*.json

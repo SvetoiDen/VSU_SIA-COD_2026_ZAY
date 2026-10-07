@@ -36,5 +36,6 @@ class Player:
         return self._jsonPlayer['health'], self._jsonPlayer['mana']
 
     def build(self) -> dict:
-        if self.isCheckPoint(): return {"error": 404}
+        if self.isCheckPoint():
+            return {"error": 404}
         return self._jsonPlayer
