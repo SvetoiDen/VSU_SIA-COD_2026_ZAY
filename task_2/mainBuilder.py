@@ -11,9 +11,3 @@ if __name__ == "__main__":
     director.build_player_human_magic()
 
     resPerson = builder.player.build()
-    director.viewPlayer(resPerson)
-    director.saveFilePlayer(
-        resPerson,
-        'person_1',
-        'D:/Cogs_Project/VSU_SIA-COD_2026_ZAY/task_2'
-    )

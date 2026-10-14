@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from Player import Player
 from ClassPlayer import ClassPlayer
 from ItemsPlayer import ItemsPlayer
+from SkillsPlayer import SkillsPlayer
 from SpeciesPlayer import SpeciesPlayer
 from ViewPlayer import ViewPlayer
 
@@ -25,7 +26,7 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def skilsPlayer(self):
+    def skillsPlayer(self, skillsPlayer: SkillsPlayer, number: int):
         pass
 
     @abstractmethod
@@ -33,11 +34,7 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def updateSkils(self) -> None:
-        pass
-
-    @abstractmethod
-    def updateState(self) -> None:
+    def updateSkills(self) -> None:
         pass
 
     @abstractmethod

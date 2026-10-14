@@ -4,6 +4,7 @@ from ClassPlayer import ClassPlayer
 from SpeciesPlayer import SpeciesPlayer
 from ViewPlayer import ViewPlayer
 from ItemsPlayer import ItemsPlayer
+from SkillsPlayer import SkillsPlayer
 
 
 class BuilderPlayer(Builder):
@@ -11,7 +12,9 @@ class BuilderPlayer(Builder):
                  speciesplayer: SpeciesPlayer = SpeciesPlayer.HUMAN):
         self._classPlayer = classplayer
         self._speciesPlayer = speciesplayer
+        self._point_stats = 20
         self._items = []
+        self._skills = []
         self.reset()
 
     def reset(self):
@@ -50,16 +53,20 @@ class BuilderPlayer(Builder):
             "intelligent", value1['intelligent'] + value2['intelligent']
         ).setStateAttribute("speed", value1['speed'] + value2['speed'])
 
-    def skilsPlayer(self):
-        pass
+    def skillsPlayer(self, skillsPlayer: SkillsPlayer, number: int):
+        self._skills.append(skillsPlayer[self._classPlayer.getName()][number])
+        return self
 
-    def viewPlayer(self, view: ViewPlayer) -> None:
-        self._player.setAttribute('view', view.buildView())
+    def viewPlayer(self, view: ViewPlayer, *args) -> None:
+        dataView = view.buildView()
+        if args is None:
+            for k, v in dataView.items():
+                dataView[k] = v[0]
+        else:
+            pass
+        self._player.setAttribute('view', dataView)
 
-    def updateSkils(self):
-        pass
-
-    def updateState(self):
+    def updateSkills(self):
         pass
 
     def healthPlayer(self, health: int = None):

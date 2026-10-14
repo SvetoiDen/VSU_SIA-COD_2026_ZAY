@@ -24,14 +24,5 @@ class DirectorPlayer:
         self.builder.statsPlayer()
         self.builder.manaPlayer(40).healthPlayer(45)
         self.builder.itemAddStartPlayer(ItemsPlayer.ADVENTURE)
-        self.builder.itemAddPlayer("мешок говна")
+        self.builder.itemAddPlayer("Легендарный айтем")
         self.builder.viewPlayer(ViewPlayer.HUMAN)
-
-    def viewPlayer(self, jsData: dict) -> None:
-        import json
-        print(json.dumps(jsData, indent=2, ensure_ascii=False))
-
-    def saveFilePlayer(self, jsData: dict, name: str, path: str) -> None:
-        import json
-        with open(f'{path}/{name}.json', 'w', encoding='utf-8') as jFile:
-            json.dump(jsData, jFile, indent=3, ensure_ascii=False)
