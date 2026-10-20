@@ -23,6 +23,7 @@ class BuilderPlayer(Builder):
     @property
     def player(self) -> Player:
         self._player.setAttribute('items', self._items)
+        self._player.setAttribute('skills', self._skills)
         player = self._player
         self.reset()
         return player
@@ -53,8 +54,41 @@ class BuilderPlayer(Builder):
             "intelligent", value1['intelligent'] + value2['intelligent']
         ).setStateAttribute("speed", value1['speed'] + value2['speed'])
 
-    def skillsPlayer(self, skillsPlayer: SkillsPlayer, number: int):
-        self._skills.append(skillsPlayer[self._classPlayer.getName()][number])
+    def setStrength(self, value: int = 0):
+        if value < 0:
+            raise Exception("Значение параметра силы не может быть меньше 0")
+        self._player.setStateAttribute('strength', value)
+
+    def setAgility(self, value: int):
+        if value < 0:
+            raise Exception("Значение параметра ловкости не может быть меньше 0")
+        self._player.setStateAttribute('agility', value)
+
+    def setIntelligent(self, value: int):
+        if value < 0:
+            raise Exception("Значение параметра интеллекта не может быть меньше 0")
+        self._player.setStateAttribute('intelligent', value)
+
+    def setSpeed(self, value: int):
+        if value < 0:
+            raise Exception("Значение параметра скорости не может быть меньше 0")
+        self._player.setStateAttribute('speed', value)
+
+    def skillsPlayer(self, skillsPlayer: SkillsPlayer, number: int = 0, classPlayer: ClassPlayer = None):
+        if number >= 10:
+            raise Exception("Нумерация скиллов от 0 до 9")
+
+        if skillsPlayer == SkillsPlayer.NON_SKILL:
+            self._skills.append(skillsPlayer.getSkillClass(ClassPlayer.NONCLASS, number))
+        else:
+            if classPlayer is None:
+                skillClass = skillsPlayer.getSkillClass(self._classPlayer, number)
+            else:
+                skillClass = skillsPlayer.getSkillClass(classPlayer, number)
+
+            if skillClass is None:
+                raise Exception("Такой скилл у класса не найден")
+            self._skills.append(skillsPlayer.getSkillClass(self._classPlayer, number))
         return self
 
     def viewPlayer(self, view: ViewPlayer, *args) -> None:
@@ -65,9 +99,6 @@ class BuilderPlayer(Builder):
         else:
             pass
         self._player.setAttribute('view', dataView)
-
-    def updateSkills(self):
-        pass
 
     def healthPlayer(self, health: int = None):
         if self.isCurrentClassSpecies():
@@ -98,10 +129,11 @@ class BuilderPlayer(Builder):
     def isCurrentClassSpecies(self) -> bool:
         return self._classPlayer is None and self._speciesPlayer is None
 
-    def balanceHealthMana(self):
+    def balanceStatsHealthMana(self):
         health, mana = self._player.getHealthManaPlayer()
         self.healthPlayer(1 if health < 0 else health)
         self.manaPlayer(1 if mana < 0 else mana)
+        self.statsPlayer()
 
         return self
 

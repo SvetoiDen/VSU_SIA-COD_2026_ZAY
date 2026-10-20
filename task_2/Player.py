@@ -27,15 +27,16 @@ class Player:
         return self
 
     def setStateAttribute(self, state: str, value: int):
-        self._pointStats -= value
         self._jsonPlayer['stats'][state] += value
         return self
 
-    def isCheckPoint(self) -> bool:
-        return self._pointStats < 0
-
     def getHealthManaPlayer(self) -> tuple[int, int]:
         return self._jsonPlayer['health'], self._jsonPlayer['mana']
+
+    def _isCheckPoint(self) -> bool:
+        point = self._jsonPlayer['stats']['strength'] + self._jsonPlayer['stats']['agility'] + \
+                self._jsonPlayer['stats']['intelligent'] + self._jsonPlayer['stats']['speed']
+        return self._pointStats - point < 0
 
     def _viewPlayer(self, jsData: dict) -> None:
         print(dumps(jsData, indent=2, ensure_ascii=False))
@@ -45,8 +46,8 @@ class Player:
             dump(jsData, jFile, indent=3, ensure_ascii=False)
 
     def build(self) -> dict:
-        if self.isCheckPoint():
-            return {404: "Stats_Point > 20"}
+        if self._isCheckPoint():
+            raise Exception(f"Очки навыков превышают допустимые малые значения -> {self._jsonPlayer['stats']}")
         self._viewPlayer(self._jsonPlayer)
-        self._saveFilePlayer(self._jsonPlayer)
+        # self._saveFilePlayer(self._jsonPlayer)
         return {200: "correct"}

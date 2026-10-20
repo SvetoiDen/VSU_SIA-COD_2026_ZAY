@@ -6,6 +6,7 @@ from SkillsPlayer import SkillsPlayer
 from SpeciesPlayer import SpeciesPlayer
 from ViewPlayer import ViewPlayer
 
+
 class Builder(ABC):
 
     @property
@@ -26,15 +27,27 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def skillsPlayer(self, skillsPlayer: SkillsPlayer, number: int):
+    def setStrength(self, value: int):
+        pass
+
+    @abstractmethod
+    def setAgility(self, value: int):
+        pass
+
+    @abstractmethod
+    def setIntelligent(self, value: int):
+        pass
+
+    @abstractmethod
+    def setSpeed(self, value: int):
+        pass
+
+    @abstractmethod
+    def skillsPlayer(self, skillsPlayer: SkillsPlayer, number: int = 0, classPlayer: ClassPlayer = None):
         pass
 
     @abstractmethod
     def viewPlayer(self, view: ViewPlayer):
-        pass
-
-    @abstractmethod
-    def updateSkills(self) -> None:
         pass
 
     @abstractmethod
@@ -46,7 +59,7 @@ class Builder(ABC):
         pass
 
     @abstractmethod
-    def balanceHealthMana(self):
+    def balanceStatsHealthMana(self):
         pass
 
     @abstractmethod
