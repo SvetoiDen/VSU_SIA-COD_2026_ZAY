@@ -4,7 +4,7 @@ from random import randint
 
 @dataclass(frozen=True)
 class PlayerView:
-    jsonPlayer: dict
+    _jsonPlayer: dict
     name: str
 
     @property
@@ -13,60 +13,60 @@ class PlayerView:
 
     @property
     def classPlayer(self) -> str:
-        return self.jsonPlayer['class']
+        return self._jsonPlayer['class']
 
     @property
     def speciesPlayer(self) -> str:
-        return self.jsonPlayer['species']
+        return self._jsonPlayer['species']
 
     @property
     def health(self) -> int:
-        return self.jsonPlayer['health']
+        return self._jsonPlayer['health']
 
     @property
     def mana(self) -> int:
-        return self.jsonPlayer['mana']
+        return self._jsonPlayer['mana']
 
     @property
     def strength(self) -> int:
-        return self.jsonPlayer['stats']['strength']
+        return self._jsonPlayer['stats']['strength']
 
     @property
     def agility(self) -> int:
-        return self.jsonPlayer['stats']['agility']
+        return self._jsonPlayer['stats']['agility']
 
     @property
     def intelligent(self) -> int:
-        return self.jsonPlayer['stats']['intelligent']
+        return self._jsonPlayer['stats']['intelligent']
 
     @property
     def speed(self) -> int:
-        return self.jsonPlayer['stats']['speed']
+        return self._jsonPlayer['stats']['speed']
 
     def statsPlayerInfo(self) -> None:
-        statsJson = self.jsonPlayer['stats']
+        statsJson = self._jsonPlayer['stats']
         print('# Характеристики Игрока #')
         for key, value in statsJson.items():
             print(f'{key} -> {value}')
         print()
 
     def itemsPlayerInfo(self) -> None:
-        itemJson = self.jsonPlayer['items']
+        itemJson = self._jsonPlayer['items']
         print('# Предметы игрока #')
         for i, item in enumerate(itemJson, 1):
             print(f"{i} -> {item}")
         print()
 
     def skillsPlayerInfo(self) -> None:
-        classJson = self.jsonPlayer['skills']
+        classJson = self._jsonPlayer['skills']
         print('# Скиллы игрока #')
         for i, item in enumerate(classJson, 1):
             print(f"{i} навык -> {item}")
         print()
 
     def viewPlayerInfo(self) -> None:
-        viewJson = self.jsonPlayer['view']
+        viewJson = self._jsonPlayer['view']
         print("# Внешность игрока #")
         for key, value in viewJson.items():
-            print(f"{key} -> {value[randint(0, len(value)-1)]}")
+            print(f"{key} -> {value[randint(0, len(value) - 1)]}")
         print()

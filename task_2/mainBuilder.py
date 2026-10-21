@@ -10,9 +10,11 @@ def view_player(player: PlayerView):
     print(player.namePlayer)
     print(player.classPlayer)
     print(player.speciesPlayer)
+    print(f"ХП = {player.health} ; МАНА = {player.mana}")
+    print(
+        f"CИЛА = {player.strength} ; ЛОВКОСТЬ = {player.agility} ; ИНТЕЛЛЕКТ = {player.intelligent} ; СКОРОСТЬ = {player.speed} ;")
     player.itemsPlayerInfo()
     player.skillsPlayerInfo()
-    player.statsPlayerInfo()
     player.viewPlayerInfo()
 
 
@@ -24,14 +26,16 @@ if __name__ == "__main__":
     director.build_player_human_magic()
     builder.skillsPlayer(SkillsPlayer.NON_SKILL)
     builder.skillsPlayer(SkillsPlayer.NON_SKILL, 4)
+    builder.setStrength(5)
 
-    resPerson = builder.player.build()
-    view_player(resPerson)
+    player1 = builder.player.build()
+    view_player(player1)
 
     director.build_player_dfarf_warlor()
-    resperson2 = builder.player.build()
-    view_player(resperson2)
+    builder.manaPlayer(40)
+    player2 = builder.player.build()
+    view_player(player2)
 
     director.build_player_elf_bow()
-    resperson3 = builder.player.build()
-    view_player(resperson3)
+    player3 = builder.player.build()
+    view_player(player3)

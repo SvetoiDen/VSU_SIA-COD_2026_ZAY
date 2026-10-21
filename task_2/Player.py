@@ -20,7 +20,7 @@ class Player:
             },
             "skills": [],
             "items": [],
-            "view": []
+            "view": {}
         }
 
     def setAttribute(self, key: str, value: Any):
@@ -43,18 +43,13 @@ class Player:
                 self._jsonPlayer['stats']['intelligent'] + self._jsonPlayer['stats']['speed']
         return self._pointStats - point < 0
 
-    def _viewPlayer(self, jsData: dict) -> None:
-        print(dumps(jsData, indent=2, ensure_ascii=False))
-
-    def _saveFilePlayer(self, jsData: dict, path: str = "D:/Cogs_Project/VSU_SIA-COD_2026_ZAY/task_2") -> None:
-        with open(f'{path}/person_{randint(1, 10 ** 3)}.json', 'w', encoding='utf-8') as jFile:
-            dump(jsData, jFile, indent=3, ensure_ascii=False)
+    # def _saveFilePlayer(self, jsData: dict, path: str = "D:/Cogs_Project/VSU_SIA-COD_2026_ZAY/task_2") -> None:
+    #     with open(f'{path}/person_{randint(1, 10 ** 3)}.json', 'w', encoding='utf-8') as jFile:
+    #         dump(jsData, jFile, indent=3, ensure_ascii=False)
 
     def build(self) -> PlayerView:
         if self._isCheckPoint():
             raise Exception(f"Очки навыков превышают допустимые малые значения -> {self._jsonPlayer['stats']}")
         print('# Player ready #')
 
-        # self._viewPlayer(self._jsonPlayer)
-        # self._saveFilePlayer(self._jsonPlayer)
         return PlayerView(self._jsonPlayer, f"Игрок {randint(1, 999)}")

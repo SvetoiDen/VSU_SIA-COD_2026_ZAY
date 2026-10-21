@@ -15,9 +15,9 @@ class BuilderPlayer(Builder):
         self._point_stats = 20
         self._items = []
         self._skills = []
-        self.reset()
+        self._reset()
 
-    def reset(self):
+    def _reset(self):
         self._items = []
         self._skills = []
         self._player = Player()
@@ -27,11 +27,12 @@ class BuilderPlayer(Builder):
         self._player.setAttribute('items', self._items)
         self._player.setAttribute('skills', self._skills)
         player = self._player
-        self.reset()
+        self._reset()
         return player
 
     def removeBuilderPlayer(self):
-        self.reset()
+        print("# delete Build Player #")
+        self._reset()
 
     def speciesPlayer(self, speciesplayer: SpeciesPlayer = None):
         if speciesplayer is not None:
@@ -138,8 +139,10 @@ class BuilderPlayer(Builder):
 
     def balanceStatsHealthMana(self):
         health, mana = self._player.getHealthManaPlayer()
-        self.healthPlayer(1 if health < 0 else health)
-        self.manaPlayer(1 if mana < 0 else mana)
+        if health < 0:
+            self.healthPlayer(1)
+        if mana < 0:
+            self.manaPlayer(1)
         self.statsPlayer()
 
         return self
