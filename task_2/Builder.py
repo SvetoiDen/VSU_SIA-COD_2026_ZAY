@@ -15,6 +15,10 @@ class Builder(ABC):
         pass
 
     @abstractmethod
+    def removeBuilderPlayer(self):
+        pass
+
+    @abstractmethod
     def speciesPlayer(self, speciesPlayer: SpeciesPlayer = None):
         pass
 

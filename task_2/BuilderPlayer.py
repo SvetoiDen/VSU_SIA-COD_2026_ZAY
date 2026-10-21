@@ -18,6 +18,8 @@ class BuilderPlayer(Builder):
         self.reset()
 
     def reset(self):
+        self._items = []
+        self._skills = []
         self._player = Player()
 
     @property
@@ -27,6 +29,9 @@ class BuilderPlayer(Builder):
         player = self._player
         self.reset()
         return player
+
+    def removeBuilderPlayer(self):
+        self.reset()
 
     def speciesPlayer(self, speciesplayer: SpeciesPlayer = None):
         if speciesplayer is not None:
@@ -88,7 +93,9 @@ class BuilderPlayer(Builder):
 
             if skillClass is None:
                 raise Exception("Такой скилл у класса не найден")
-            self._skills.append(skillsPlayer.getSkillClass(self._classPlayer, number))
+            elif skillClass in self._skills:
+                raise Exception("Такой скилл уже существует в Player")
+            self._skills.append(skillClass)
         return self
 
     def viewPlayer(self, view: ViewPlayer, *args) -> None:
