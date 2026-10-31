@@ -6,3 +6,4 @@ task_1
 *.csv
 PATTERN.md
 *.json
+*.bin
