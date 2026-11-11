@@ -1,26 +1,43 @@
-from sort import external_sort
+from typing import Iterable, List
+
+from TopFilmCost import TopFilmCost, Request
 
 
-def main():
-    input_path = 'numbers_1e7.bin'  # путь к исходному файлу
-    output_path = 'sorted_numbers.bin'
-    M_values = [2 * 10 ** 4, 10 ** 5, 10 ** 6, 10 ** 7]
-
-    results = []
-    for M in M_values:
-        print(f"Запуск M = {M}...")
-        stats = external_sort(input_path, output_path, M, verbose=False)
-        results.append(stats)
-        print(f"M={M}: phase1={stats['phase1_time']:.2f}s, phase2={stats['phase2_time']:.2f}s, "
-              f"cmp1={stats['phase1_comparisons']}, cmp2={stats['phase2_comparisons']}, "
-              f"total_cmp={stats['total_comparisons']}, chunks={stats['num_chunks']}")
-
-    print("\nM\tphase1_time\tphase2_time\tcmp1\tcmp2\ttotal_cmp\tchunks")
-    for s in results:
-        print(f"{s['M']}\t{s['phase1_time']:.2f}\t{s['phase2_time']:.2f}\t"
-              f"{s['phase1_comparisons']}\t{s['phase2_comparisons']}\t"
-              f"{s['total_comparisons']}\t{s['num_chunks']}")
+def top_k(requests: Iterable[Request], k: int) -> List[str]:
+    tk = TopFilmCost(k)
+    for arrival, (rid, cost) in enumerate(requests):
+        tk.add(rid, cost, arrival)
+    return tk.result()
 
 
-if __name__ == '__main__':
-    main()
+def run_tests() -> None:
+    # k = 0
+    assert top_k([("Фильм 1", 5), ("Фильм 2", 10)], 0) == []
+
+    # k = 1
+    reqs = [("a", 5), ("b", 10), ("c", 7), ("d", 10)]
+    # b и d одинаковы по cost, но b поступила раньше
+    assert top_k(reqs, 1) == ["b"]
+
+    # k больше числа заявок
+    reqs = [("a", 5), ("b", 10), ("c", 7)]
+    assert top_k(reqs, 5) == ["b", "c", "a"]
+
+    # равные стоимости: выигрывают более ранние
+    reqs = [("a", 10), ("b", 10), ("c", 10), ("d", 10)]
+    assert top_k(reqs, 3) == ["a", "b", "c"]
+
+    # смешанный случай
+    reqs = [("a", 10), ("b", 9), ("c", 10), ("d", 8), ("e", 9)]
+    # cost=10: a, c; затем cost=9: b (раньше e)
+    assert top_k(reqs, 3) == ["a", "c", "b"]
+
+    # отрицательные стоимости
+    reqs = [("a", -5), ("b", -1), ("c", -3)]
+    assert top_k(reqs, 2) == ["b", "c"]
+
+    print("all tests passed")
+
+
+if __name__ == "__main__":
+    run_tests()
